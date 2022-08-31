@@ -1,0 +1,97 @@
+<p>update works!</p>
+<div class="p-3">
+  <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+
+    <!-- id -->
+    <div class="form-group mb-3">
+      <label for="id"> ID </label>
+      <input
+          type="text"
+          id="id"
+          name="id"
+          class="form-control"
+          formControlName="id"
+          [placeholder] = 'getURL()'
+      >
+      </div>
+      <!-- first name  -->
+
+      <div class="form-group mb-3">
+        <label for="firstName">First Name</label>
+        <input
+            type="text"
+            id="firstName"
+            name="firstName"
+            class="form-control"
+            formControlName="firstName"
+            required
+        >
+
+        </div>
+        <!-- [placeholder]="getUserId(getURL()).firstName" -->
+    <!-- Last name  -->
+    <div class="form-group mb-3">
+      <label for="lastName">Last Name</label>
+      <input
+          type="text"
+          id="lastName"
+          name="lastName"
+          class="form-control"
+          formControlName="lastName"
+          required
+
+      >
+      </div>
+    <!-- email -->
+    <div class="form-group mb-3">
+      <label for="email"> Email </label>
+      <input
+          type="text"
+          id="email"
+          name="email"
+          class="form-control"
+          formControlName="email"
+          required
+
+      >
+          </div>
+      <!-- title -->
+      <div class="form-group mb-3">
+          <label for="title">Title</label>
+          <select
+              name="title"
+              id="title"
+              class="form-control"
+              formControlName="title"
+          >
+              <option *ngFor="let t of titles" [value]="t">{{ t }}</option>
+          </select>
+      </div>
+      <button
+          class="btn btn-outline-primary me-2 my-2"
+          type="submit"
+          (click)="updateUser(getURL())"
+
+      >
+          Submit
+      </button>
+      <button
+          class="btn btn-outline-secondary me-2 my-2"
+          type="button"
+          (click)="userForm.reset()"
+      >
+          Reset
+      </button>
+
+      <button
+      class="btn btn-outline-secondary me-2 my-2"
+      type="button"
+      (click)="getURL()"
+  >
+      Get URL
+  </button>
+  </form>
+  <div class="alert alert-danger my-2" *ngIf="userForm.invalid && userForm.touched && userForm.errors?.['identityRevealed']">
+    First and Last name cant be the same.
+</div>
+</div>

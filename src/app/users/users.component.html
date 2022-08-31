@@ -1,0 +1,352 @@
+<div class="row">
+  <h1 class="col-5"> Users Info </h1>
+  <button class="btn btn-dark col-2" (click)="goBack()"> Back </button>
+  &nbsp;<button class="btn btn-dark col-2" [routerLink]="[usersPath]" routerLinkActive="active" (click)="toPost()">Post</button>
+  &nbsp;<button class="btn btn-dark col-2" [routerLink]="[detailsPath]" routerLinkActive="active" (click)="toDetails()"> Details</button>
+</div>
+
+<br><br><br>
+
+<!-- cards  -->
+<!--  Show   -->
+<div class="container-md">
+<div style="margin:10px">
+ <ng-container  [ngSwitch]="cond">
+  <div *ngSwitchCase="'post'">
+<div *ngIf="view">
+  <div class="container-md">
+    <!-- [routerLink]="[createpath]" routerLinkActive="active" -->
+    &nbsp;<button class="btn btn-dark col-2" (click)="add()" style="width:120px; height: 40px;"> Create User Manualy </button>
+    &nbsp;<button class="btn btn-dark col-2" (click)="createUser()" class="btn btn-dark"  style="width:120px; height: 40px;">Create User</button> <br> <br>
+    &nbsp;<button class="btn btn-dark col-2" (click)="reactiveform()"  class="btn btn-dark"  style="width:130px; height: 40px;">Create User (Reactive Form)</button>
+    <br><br><br><br></div>
+ <span *ngFor="let v of view.data" style="display:inline-block">
+  <div class="card" style="width: 25rem;">
+  <!-- <img src="https://cdn.icon-icons.com/icons2/2506/PNG/512/user_icon_150670.png" class="card-img-top" alt="..."> -->
+  <div class="card-body">
+    <h5 class="card-title"> user </h5>
+     </div>
+  <ul class="list-group list-group-flush">
+    <li class="list-group-item">ID : {{ v.id }} </li>
+    <li class="list-group-item">First name : {{ v.firstName }} </li>
+    <li class="list-group-item">Last name : {{ v.lastName }}</li>
+    <li class="list-group-item">Email : {{ v.firstName }}@gmail.com </li>
+    <li class="list-group-item">Title : {{ v.title }}</li>
+
+  </ul>
+  <div class="card-body">
+    &nbsp;<button class="btn btn-dark col-2" (click)="reactiveupdate(v)" [routerLink]="[reactiveupdatepath + '/' + v.id]" routerLinkActive="active"  class="btn btn-dark"  >Update User (Reactive Form)</button> <br> <br>
+    <button (click)="toEdit(v.id)" class="btn btn-light">Edit User</button>
+    &nbsp; <button (click)="deleteUser(v.id)" class="btn btn-secondary">Delete User</button>
+
+  </div>
+  </div>
+</span>&nbsp;  &nbsp;
+</div>
+</div>
+
+<!-- end of card -->
+
+ <div *ngSwitchCase="'reactiveform'">
+  <app-reactive-form></app-reactive-form>
+</div>
+<div *ngSwitchCase="'reactiveupdate'">
+  <app-update></app-update>
+</div>
+
+  <!-- add user  -->
+<div *ngSwitchCase="'add'">
+  <!-- form -->
+  <div class="row g-3">
+    <form (ngSubmit)="onSubmit()" #userForm="ngForm" appIdentityRevealed>
+      <!-- first name -->
+        <div class="col-md-3">
+            <label for="name">Name</label>
+            <input
+                type="text"
+                id="name"
+                name="name"
+                minlength="4"
+                class="form-control"
+                required
+                [(ngModel)]="model.firstName"
+                #nameInput="ngModel"
+            >
+            <div class="alert alert-danger my-2" *ngIf="!nameInput.valid && nameInput.touched">
+                Name is required
+            </div>
+            <div class="alert alert-danger my-2" *ngIf="nameInput.errors?.['minlength'] && nameInput.touched">
+              min length is 4 chars
+          </div>
+        </div>
+        <!-- last name is optional -->
+        <div class="col-md-3">
+            <label for = "lastname">Last Name </label>
+            <input
+                type="text"
+                id="lastname"
+                name="lastname"
+                required
+                minlength="4"
+                class="form-control"
+                [(ngModel)]="model.lastName"
+                #lastin = 'ngModel'
+            >
+            <div class="alert alert-danger my-2" *ngIf="!lastin.valid && lastin.touched">
+              Last Name is required
+          </div>
+             <div class="alert alert-danger my-2" *ngIf="lastin.errors?.['minlength'] && lastin.touched">
+            min length is 4 chars
+        </div>
+        </div>
+        <!-- id -->
+        <div class="col-md-3">
+            <label for="id"> ID </label>
+            <input
+                type="text"
+                name="id"
+                id="id"
+                class="form-control"
+                [(ngModel)]="model.id"
+                #idInput="ngModel"
+            >
+
+        </div>
+             <!-- email -->
+             <div class="col-md-3">
+              <label for="email">Email</label>
+              <input
+                  type="text"
+                  id="email"
+                  name="email"
+                  required="true"
+                  class="form-control"
+                  required="true"
+                  minlength="4"
+                  [(ngModel)]="model.firstName"
+                  #emailInput="ngModel"
+              >
+               <div class="alert alert-danger my-2" *ngIf="!emailInput.valid && emailInput.touched">
+                  Email is required
+              </div>
+
+          </div>
+                  <!-- title -->
+                  <div class="col-md-3">
+                    <label for="title">Title</label>
+                    <select
+                        name="title"
+                        id="title"
+                        class="form-control"
+                        [(ngModel)]="model.title"
+                        #titleInput="ngModel"
+                        required="true"
+                        minlength="2"
+                    >
+                        <option *ngFor="let t of titles" [value]="t">{{ t }}</option>
+                    </select>
+                    <div class="alert alert-danger my-2" *ngIf="!titleInput.valid && titleInput.touched">
+                      Title is required
+                  </div>
+                </div>
+         <!-- pic -->
+        <div class="col-md-3">
+            <label for="img"> Picture </label>
+              <input
+                    type='file'
+                    id="img"
+                    name="img"
+                    accept="image/*"
+                    class="form-control"
+                    [(ngModel)]="model.picture"
+             >
+        </div>
+        <!-- buttons -->
+        <button
+            class="btn btn-outline-primary me-2 my-2"
+            type="submit"
+            [disabled]="!userForm.valid "
+            (click)="addUser()"
+        >
+            Submit
+        </button>
+        <button
+            class="btn btn-outline-secondary me-2 my-2"
+            type="button"
+            (click)="userForm.reset()"
+        >
+            Reset
+        </button>
+    </form>
+        <!-- <div class="alert alert-danger my-2" *ngIf=" emailInput.errors || userForm.pristine || emailInput.pristine">
+          Email already exists
+      </div>
+      <div class="my-2">
+        Valid: {{ userForm.valid }}
+    </div>
+    <div class="my-2">
+        Touched: {{ userForm.touched }}
+    </div>
+    <div class="my-2">
+        Pristine: {{ userForm.pristine }}
+    </div>
+    <div>
+        Form Value: {{ model | json }}
+    </div> -->
+    {{ userForm.status }}
+</div>
+</div>
+<!-- <router-outlet></router-outlet> -->
+
+  <!-- data details  -->
+
+       <div *ngSwitchCase="'details'">
+       <div class="row">
+       </div>
+       <ng-container *ngIf="view">
+      <div *ngFor="let v of view.data" style="display:inline-block">
+       <div class="card" style="width: 18rem;">
+       <!-- <img src="https://cdn.icon-icons.com/icons2/2506/PNG/512/user_icon_150670.png" class="card-img-top" alt="..."> -->
+       <div class="card-body">
+         <h5 class="card-title"> user </h5>
+          </div>
+       <ul class="list-group list-group-flush">
+         <li class="list-group-item">ID : {{ v.id }} </li>
+         <li class="list-group-item">First name : {{ v.firstName }} </li>
+         <li class="list-group-item">Last name : {{ v.lastName }}</li>
+         <li class="list-group-item"> Email : {{ v.firstName }}@gmail.com</li>
+         <li class="list-group-item"> Title : {{ v.title }}</li>
+
+       </ul>
+       &nbsp;  <button (click)="getUserId(v.id)" class="btn btn-light">More Details</button>
+       </div>
+      </div>&nbsp;  &nbsp;
+    </ng-container>
+    </div>
+
+<!-- end of details  -->
+
+<!-- Edit  -->
+<div *ngSwitchCase="'edit'">
+<div class="row g-3">
+  <!-- <div *ngIf="viewid"> -->
+  <form (ngSubmit)="onSubmit()" #userForm="ngForm">
+    <!-- first name -->
+      <div class="col-md-3">
+          <label for="name">First Name</label>
+          <input
+              type="text"
+              id="name"
+              name="name"
+              class="form-control"
+              [(ngModel)]="model.firstName"
+              #nameInput="ngModel"
+              >    <!--  [placeholder]="viewid.firstName" -->
+      </div>
+      <!-- last name is optional -->
+      <div class="col-md-3">
+          <label for="lastname">Last Name </label>
+          <input
+              type="text"
+              id="lastname"
+              name="lastname"
+              class="form-control"
+              [(ngModel)]="model.lastName"
+              #lastin = 'ngModel'
+          >
+      </div>
+           <!-- email -->
+           <div class="col-md-3">
+            <label for="email">Email</label>
+            <input
+                type="text"
+                id="email"
+                name="email"
+                class="form-control"
+                disabled="true"
+
+                >
+        </div>
+                <!-- title -->
+                <div class="col-md-3">
+                  <label for="title">Title</label>
+                  <select
+                      name="title"
+                      id="title"
+                      class="form-control"
+                      [(ngModel)]="model.title"
+                      #titleInput="ngModel"
+
+                  >
+                      <option *ngFor="let t of titles" [value]="t"> {{ t }} </option>
+                  </select>
+              </div>
+       <!-- pic -->
+      <div class="col-md-3">
+          <label for="img"> Picture </label>
+            <input
+                  type='file'
+                  id="img"
+                  name="img"
+                  accept="image/*"
+                  class="form-control"
+                  [(ngModel)]="model.picture"
+           >
+      </div>
+      <!-- buttons -->
+      <button
+          class="btn btn-outline-primary me-2 my-2"
+          type="submit"
+          (click)="updateUser(curID)"
+      >  Submit
+      </button>
+  </form>
+  <!-- </div> -->
+</div>
+</div>
+<!-- end of edit  -->
+
+<div *ngSwitchCase="'id'">
+    <div style="margin: 10px; background-color: lightgray;">
+      <div *ngIf="viewid">
+      <table class="table table-striped">
+        <thead>
+    <tr>
+        <th> ID</th>
+        <th> Title </th>
+        <th> First Name  </th>
+        <th> Last Name </th>
+        <th> Gender </th>
+        <th> Email </th>
+        <th> Date of birth</th>
+        <th> Reg Date</th>
+        <th> Phone </th>
+        <th> Picture</th>
+        <th> Location</th>
+    </tr>
+ </thead>
+    <tbody>
+    <tr>
+        <td>{{viewid.id}} </td>
+        <td>{{viewid.title}} </td>
+        <td>{{viewid.firstName}}</td>
+        <td>{{viewid.lastName}} </td>
+        <td>{{viewid.gender}} </td>
+        <td>{{viewid.email}} </td>
+        <td>{{viewid.dateOfBirth}} </td>
+        <td>{{viewid.registerDate}} </td>
+        <td>{{viewid.phone}} </td>
+        <td>{{viewid.picture}} </td>
+        <td>{{viewid.location}} </td>
+    </tr>
+    </tbody>
+    </table>
+</div>
+</div>
+</div>
+<!-- end  -->
+</ng-container>
+</div>
+</div>
+
+

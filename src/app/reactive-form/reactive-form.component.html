@@ -1,0 +1,160 @@
+<p>reactive-form works!</p>
+<div class="p-3">
+  <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+    <!-- id -->
+    <div class="form-group mb-3">
+      <label for="id"> ID </label>
+      <input
+          type="text"
+          id="id"
+          name="id"
+          class="form-control"
+          formControlName="id"
+          required
+      >
+      <div
+          class="alert alert-danger my-2"
+          *ngIf="!id?.valid && id?.touched">
+          <div *ngIf="id.errors?.['required']">
+              ID is required.
+          </div>
+        </div>
+      </div>
+      <!-- first name  -->
+      <div class="form-group mb-3">
+        <label for="firstName">First Name</label>
+        <input
+            type="text"
+            id="firstName"
+            name="firstName"
+            class="form-control"
+            formControlName="firstName"
+            required
+        >
+        <div class="alert alert-danger my-2" *ngIf="!firstName?.valid && firstName?.touched">
+            <div *ngIf="firstName.errors?.['required']">
+                First Name is required.
+            </div>
+            <div *ngIf="firstName.errors?.['minlength']">
+                First Name must be at least 2 characters long
+            </div>
+            <div *ngIf="firstName.errors?.['forbiddenName']">
+               Forbidden name, first name cant be the same as last name
+            </div>
+        </div>
+        <div>
+           First Name errors: {{ firstName.errors ? (firstName.errors | json) : firstName.errors }}
+        </div>
+        <div>
+            First Name valid: {{ firstName.valid }}
+        </div>
+    </div>
+    <!-- Last name  -->
+    <div class="form-group mb-3">
+      <label for="lastName">Last Name</label>
+      <input
+          type="text"
+          id="lastName"
+          name="lastName"
+          class="form-control"
+          formControlName="lastName"
+          required
+      >
+      <div class="alert alert-danger my-2" *ngIf="!lastName?.valid && lastName?.touched">
+          <div *ngIf="lastName.errors?.['required']">
+              Last Name is required.
+          </div>
+          <div *ngIf="lastName.errors?.['minlength']">
+            Last Name must be at least 2 characters long
+          </div>
+          <div *ngIf="lastName.errors?.['forbiddenName']">
+             Forbidden name, last name cant be the same as first name
+          </div>
+      </div>
+      <div>
+        Last Name errors: {{ lastName.errors ? (lastName.errors | json) : lastName.errors }}
+      </div>
+      <div>
+        Last Name valid: {{ lastName.valid }}
+      </div>
+  </div>
+    <!-- email -->
+    <div class="form-group mb-3">
+      <label for="email"> Email </label>
+      <input
+          type="text"
+          id="email"
+          name="email"
+          class="form-control"
+          formControlName="email"
+          required
+      >
+      <div
+          class="alert alert-danger my-2"
+          *ngIf="!email?.valid && email?.touched">
+          <div *ngIf="email.errors?.['required']">
+              Email is required.
+          </div>
+          <div *ngIf="email.errors?.['minlength']">
+            Name must be at least 2 characters long
+        </div>
+        <div>
+          email errors: {{ email.errors ? (email.errors | json) : email.errors }}
+        </div>
+        <div>
+          email valid: {{ email.valid }}
+        </div>
+          </div>
+          </div>
+      <!-- title -->
+      <div class="form-group mb-3">
+          <label for="title">Title</label>
+          <select
+              name="title"
+              id="title"
+              class="form-control"
+              formControlName="title"
+          >
+              <option *ngFor="let t of titles" [value]="t">{{ t }}</option>
+          </select>
+          <div class="alert alert-danger my-2" *ngIf="!title?.valid && title?.touched && title.errors?.['required']">
+              Title is required
+          </div>
+      </div>
+      <button
+          class="btn btn-outline-primary me-2 my-2"
+          type="submit"
+          [disabled]="!userForm.valid"
+          (click)="addUser()"
+
+      >
+          Submit
+      </button>
+      <button
+          class="btn btn-outline-secondary me-2 my-2"
+          type="button"
+          (click)="userForm.reset()"
+      >
+          Reset
+      </button>
+  </form>
+  <div class="alert alert-danger my-2" *ngIf="userForm.invalid && userForm.touched && userForm.errors?.['identityRevealed']">
+    First and Last name cant be the same.
+</div>
+  <div class="my-2">
+      Valid: {{ userForm.valid }}
+  </div>
+  <div class="my-2">
+      Touched: {{ userForm.touched }}
+  </div>
+  <div class="my-2">
+   if equal : {{ firstName === lastName }}
+  </div>
+  <div class="my-2">
+      Pristine: {{ userForm.pristine }}
+  </div>
+  <div>
+      Form Value: {{ userForm.value | json }}
+  </div>
+  {{ userForm.status }}
+</div>

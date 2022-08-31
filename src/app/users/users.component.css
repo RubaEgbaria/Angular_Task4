@@ -1,0 +1,27 @@
+#div1 {
+  display: inline-block;
+  margin: 15px;
+  padding: 10px;
+  border: 2px solid darkslategray;
+  background-color: whitesmoke;
+}
+#inpage{
+  display: block;
+}
+
+.ng-valid[required] {
+  border-left: 5px solid rgb(11, 161, 11);
+}
+
+.ng-invalid:not(form) {
+  border-left: 5px solid rgb(230, 13, 13);
+}
+/*
+.ng-dirty:not(form) {
+  background-color: aqua;
+}
+
+.ng-touched:not(form) {
+  border-color: coral;
+  border-width: 3px;
+} */

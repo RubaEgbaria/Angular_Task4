@@ -1,0 +1,15 @@
+#div1 {
+  /* display: inline-tble; */
+  margin: 5px;
+  padding: 10px;
+  border: 4px solid darkslategray;
+  background-color: darkslategray;
+  max-height: 80px;
+}
+#page {
+  background-color: #4F4846;
+}
+ ul {
+  /* display:inline-block; */
+  padding-right: 50px;
+}
