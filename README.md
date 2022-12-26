@@ -1,27 +1,81 @@
-# Task4
+<h1> Task 3 </h1> 
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 14.0.1.
+<h3 > services </h3>
+<ul>
+<li> users – list </li>
+<li> create </li>
+<li> update </li>
+<li> delete </li>
+</ul>
 
-## Development server
+<h1> Task 4 </h1>
+ 
+<h3> Routing </h3> 
+<ul>
+<li>Create a new application with the routing option to configure the application to 
+use the Router module.
+</li>
+<li>Add a navigation bar at the top of the page. The navigation bar should have a link 
+for the homepage, an about us page and a users’ page.
+</li>
+<li>In the users’ page, display a list of all users (same as the previous task). When you 
+click on a specific user, you should navigate to a user details page where you will 
+display all of the selected user’s data. 
+This page should have a back button that will navigate to the previous page (users 
+list).</li>
+<li>The user details page will have two tabs; details and posts.</li>
+<li>The details tab will display the user information.</li>
+<li>The posts tab will display this user’s posts. You can add, edit and delete posts.</li>
+<li> Handle the case when the user tries to navigate to routes that don’t exist.</li>
+<li>Configure the default route to navigate to the homepage</li>
+</ul>
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+<h1> Task 5 </h1 >
 
-## Code scaffolding
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+Create a template-driven form to create & update a user.
+<ul><li>Create a new component (UserForm).</li>
+<li>When you click on the create button in the users list you should navigate to 
+the user form component.</li>
+<li>When you click on the update button you should also navigate to the user 
+form component.</li>
+<li>Note that we will have 2 routes for the same component.</li>
+<li>In the user form component, you should display the input fields for the 
+<li>create/update operations based on the current URL.</li>
+<li>The user form component will have a back button and a submit button.</li>
+<li>When you submit the form you should display a success message in case of 
+a successful request, then after 2 seconds of displaying the message 
+navigate back to the previous page.</li>
+<li>You should handle any errors that occur and display a user-friendly 
+message without navigating back to the previous page.</li>
+<li>Mark the First Name, Last Name and Email fields as required fields.</li>
+<li>Remember that you should disable the email field when you are updating a 
+user.</li>
+<li>Disable the submit button when the form is invalid to prevent sending an 
+<li>Http request with invalid data.</li>
+<li>Use the right type of input for each form field.</li>
+</ul>
 
-## Build
+<h1> Task 6  </h1>
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+<h3>Part 1: </h3>
 
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+<p> Redo task 5 with reactive forms instead of template-driven forms. </p>
+<p> Add the following validations to the fields: </p>
+<ul>
+<li>Required for the first name, last name and email fields.</li>
+<li>Minimum length of 2 characters for the first name and last name fields.</li>
+<li>Add email validation on the email field.</li>
+<li>Create a custom validator to prevent submitting a user when their </li>
+<li>first name is the same as their last name.</li>
+<li>Show the appropriate messages for each error.</li>
+</ul>
+<h3>Part 2:</h3>
+<p>Create forms to create and update posts using reactive forms.</p>
+<li>Add the appropriate validations; do what the models say.</li>
+<li>For the owner field, show the owner’s name in a disabled input field.</li>
+<li>Remember to send the owner’s id when creating a post and don’t send it when updating a post.</li>
+<li>Don’t disable the submit button, show the appropriate error messages when a user tries to submit an invalid form. </li>
+<li>But don’t send Http request with invalid data (when the form is invalid). </li>
+<li>For tags, use a FormArray instance.</li>
+</ul>
